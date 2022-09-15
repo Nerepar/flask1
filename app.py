@@ -34,7 +34,11 @@ def get_mult():
 @app.route('/del', methods=['POST'])
 def get_del():
     request_data = request.get_json() or {}
-    del_digits = int(request_data.get('a', 0)) / int(request_data.get('b', 0))
+
+    if not int(request_data.get('b', 0)):
+        return HttpResponse.make(success=False, error_text='Деление на 0')
+
+    del_digits = float(request_data.get('a', 0)) / float(request_data.get('b', 0))
     return HttpResponse.make(data=del_digits)
 
 

@@ -5,7 +5,7 @@ from flask import make_response
 
 class HttpResponse:
     @staticmethod
-    def make(*, data: Optional[Union[int, str, bool, dict, list]] = None,
+    def make(*, data: Optional[Union[int, float, str, bool, dict, list]] = None,
              success: Optional[bool] = True,
              meta: Optional[dict] = None,
              error_text: Optional[str] = None):
