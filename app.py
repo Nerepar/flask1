@@ -35,11 +35,36 @@ def get_mult():
 def get_del():
     request_data = request.get_json() or {}
 
-    if not int(request_data.get('b', 0)):
+    if not float(request_data.get('b', 0)):
         return HttpResponse.make(success=False, error_text='Деление на 0')
 
     del_digits = float(request_data.get('a', 0)) / float(request_data.get('b', 0))
     return HttpResponse.make(data=del_digits)
+
+
+@app.route('/all_operation', methods=['POST'])
+def all_operation():
+    request_data = request.get_json() or {}
+    a = request_data.get('a', 0)
+    b = request_data.get('b', 0)
+    return HttpResponse.make(data={
+        'sum': a + b,
+        'min': a - b,
+        'del': a / b,
+        'mult': a * b
+    })
+
+
+@app.route('/ct', methods=['POST'])
+def checking_text():
+    request_data = request.get_json() or {}
+    inner_str_one = request_data.get('str_a').lower()
+    inner_str_two = request_data.get('str_b').lower()
+
+    if inner_str_two in inner_str_one:
+        return HttpResponse.make(data=True)
+    else:
+        return HttpResponse.make(data=False)
 
 
 if __name__ == '__main__':
