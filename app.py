@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import Flask, request, make_response
 
 from helpers.HttpResponse import HttpResponse
@@ -65,6 +67,63 @@ def checking_text():
         return HttpResponse.make(data=True)
     else:
         return HttpResponse.make(data=False)
+
+
+@app.route('/even_digit', methods=['POST'])
+def even_digit():
+    request_data = request.get_json() or {}
+    digit = request_data.get('digit', 0)
+    sum = 0
+    while digit > 10:
+        while digit != 0:
+            sum += digit % 10
+            digit //= 10
+        digit = sum
+        sum = 0
+    if digit % 2 == 0:
+        return HttpResponse.make(data={
+            'digit': digit,
+            'is_Even': True
+        })
+    else:
+        return HttpResponse.make(data={
+            'digit': digit,
+            'is_Even': False
+        })
+
+
+@app.route('/gn', methods=['POST'])
+def get_name():
+    request_data = request.get_json() or {}
+    surname = str(request_data.get('surname'))
+    name = str(request_data.get('name'))
+    secondname = str(request_data.get('secondname'))
+    if not name:
+        return HttpResponse.make(error_text=" Имя не задано ")
+    if not surname:
+        return HttpResponse.make(error_text=" Фамилия не задана ")
+    return HttpResponse.make(data=(surname).title() + " " + name[0].title() + "." + secondname[0].title() + ".")
+
+
+@app.route('/st', methods=['POST'])
+def set_time():
+    time = int(datetime.now().time().hour)
+    if time >= 6 and time < 12:
+        return HttpResponse.make(data={
+            'time': "Доброе утро!"
+        })
+    if time >= 12 and time < 18:
+        return HttpResponse.make(data={
+            'time': "Добрый день!"
+        })
+    if time >= 18 and time < 24:
+        return HttpResponse.make(data={
+            'time': "Добрый вечер!"
+        })
+    if time >= 0 and time < 6:
+        return HttpResponse.make(data={
+            'time': "Доброй ночи!"
+        })
 
 
 if __name__ == '__main__':
