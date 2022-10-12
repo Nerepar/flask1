@@ -82,17 +82,16 @@ class BaseModel(Model):
         """
         return self._get_columns_name(self._guarded)
 
-
     def _get_fillable_fields(self) -> List[str]:
         """
-        Добавляет поля, которые не заполняются в ручную
+        Получение списка полей для заполнения
         """
         return self._get_columns_name(self._manual_fillable)
 
     def _get_columns_name(self, skip_fields: List[str]) -> List[str]:
         """
         Получение полей, которые не содержаться в функции skip_fields
-        :param skip_fields: функция для пропуска полей
+        :param skip_fields: Пропускание поля
         """
         columns = self.metadata.tables.get(self.__tablename__).columns
 
