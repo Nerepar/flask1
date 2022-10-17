@@ -20,7 +20,7 @@ class BaseModel(Model):
 
     crated_at = Column(DateTime)
     updated_at = Column(DateTime, nullable=True)
-    deleted_at = Column(DateTime, nullabble=True)
+    deleted_at = Column(DateTime, nullable=True)
 
     def from_object(self, record: dict):
         """

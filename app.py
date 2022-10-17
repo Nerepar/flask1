@@ -2,7 +2,6 @@ from flask import Flask
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
-from model.BaseModel import BaseModel
 
 from classes.EngineConnect import EngineConnect
 
@@ -15,6 +14,7 @@ migrate = Migrate(app, db)
 
 engine = EngineConnect()
 
+from routs import *
+
 if __name__ == '__main__':
     app.run()
-
